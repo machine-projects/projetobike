@@ -11,12 +11,13 @@ import { LocalStrategy } from './strategies/local.strategy';
   imports: [
     ConfigModule.forRoot(),
     UsersModule,
-     PassportModule,
-      JwtModule.register({
-        privateKey: process.env.PRIVATE_KEY,
-        signOptions: {expiresIn: '60s'}
-  })],
-  providers: [AuthService],
-  controllers: [AuthController, LocalStrategy]
+    PassportModule,
+    JwtModule.register({
+      privateKey: process.env.PRIVATE_KEY,
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
+  providers: [AuthService, LocalStrategy],
+  controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}
