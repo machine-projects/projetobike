@@ -20,7 +20,7 @@ async create(createUserDto: any) {
   }
 
   async findAll() {
-    return await this.usersRepository.find({select: ['id','username', 'cpf', 'firstName', 'lastName', 'email', 'createdDate', 'updatedDate']});
+    return await this.usersRepository.find({select: ['id', 'cpf', 'firstName', 'lastName', 'email', 'createdDate', 'updatedDate']});
   }
 
   async findOne(
@@ -44,6 +44,6 @@ async create(createUserDto: any) {
 
   async delete(id: string) {
     await this.findOne({id});
-    return this.usersRepository.softDelete({id});
+    return await this.usersRepository.delete({id});
 }
 }

@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseUUIDPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ControllerVersionHelper } from 'src/helpers/controllerversion.helper';
 
-@Controller('api/v1/users')
+@Controller(ControllerVersionHelper.v1 + 'users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -29,7 +30,8 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.delete(id);
   }
 }
