@@ -7,6 +7,7 @@ const userMessage = {
   cpf: 'CPF precisa ser valido!',
   password: 'A senha não pode ser nula',
   email: 'O email precisa ser valido!',
+  existEmail: 'O email informado já está em uso!'
 };
 
 

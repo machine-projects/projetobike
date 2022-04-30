@@ -9,7 +9,7 @@ export class UsersEntity {
     firstName: string;
     @Column()
     lastName: string;
-    @Column()
+    @Column({unique: true})
     email: string;
     @Column()
     cpf: string;
