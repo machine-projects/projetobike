@@ -1,7 +1,7 @@
 const messageHelper = {
     stringNotNull: 'precisa ser uma string!',
     notNull: 'não pode ser nulo!',
-    isNumber: 'percisa ser numerico!',
+    isNumber: 'precisa ser numérico!',
 }
 
 export {messageHelper}
