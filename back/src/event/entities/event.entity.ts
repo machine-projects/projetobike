@@ -1,29 +1,31 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity({name: 'event'})
+@Entity({ name: 'event' })
 export class EventEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    title: string;
+  @Column()
+  title: string;
 
-    @Column()
-    description: string;
+  @Column('text')
+  description: string;
 
-    @Column()
-    startDate: Date;
+  @Column()
+  startDate: Date;
 
-    @Column()
-    stopDate: Date;
+  @Column()
+  stopDate: Date;
 
-    @Column()
-    featured: Boolean;
-    
-    @CreateDateColumn()
-    createdDate: Date;
+  @CreateDateColumn()
+  createdDate: Date;
 
-    @UpdateDateColumn()
-    updatedDate: Date;
-
+  @UpdateDateColumn()
+  updatedDate: Date;
 }

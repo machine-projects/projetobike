@@ -4,7 +4,6 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { EventModule } from './event/event.module';
-import { EventModule } from './event/event.module';
 
 @Module({
   imports: [
@@ -19,14 +18,15 @@ import { EventModule } from './event/event.module';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
-      entities: [__dirname + '/**/*.entity{.js,.ts}'],
+      entities: ['dist/**/*.entity{.js,.ts}'],
       synchronize: true,
+      autoLoadEntities: true,
     } as TypeOrmModuleOptions),
-     UsersModule,
-     AuthModule,
-     EventModule
+    UsersModule,
+    AuthModule,
+    EventModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}
