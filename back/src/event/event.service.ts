@@ -15,8 +15,8 @@ export class EventService {
   ) {}
 
   async create(createEventDto: CreateEventDto) {
-    await this.eventRepository.create(createEventDto)
-    return 'This action adds a new event';
+    const event = await this.eventRepository.create(createEventDto);
+    return event;
   }
 
   async findAll() {
