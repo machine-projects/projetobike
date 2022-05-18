@@ -1,11 +1,10 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateEventDto } from './dto/create-event.dto';
+import { FindConditions, Repository } from 'typeorm';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
 import { FeaturedEventEntity } from './entities/featuredEvent.entity';
-import  fs  from 'fs'
+import { CreateEventType } from 'src/types/createEvent.type';
 
 @Injectable()
 export class EventService {
@@ -16,23 +15,43 @@ export class EventService {
     private readonly featuredEventEntity: Repository<FeaturedEventEntity>
   ) {}
 
-  async create(createEventDto: CreateEventDto) {
-    const event = await this.eventRepository.create(createEventDto);
-    const filenames = []
+  async create(event: any) {
+    const myEvent: CreateEventType = {
+      title: event.data.title,
+      description: event.data.description,
+      images: {
+        gallery: event.images?.photos || undefined,
+        header: event.images?.imageHeader ? event.images.imageHeader[0] :  undefined,
+      },
+      isFeatured: event.data.isFeatured,
+      startDate: event.data.startDate,
+      stopDate: event.data.stopDate
+    }
+ 
+    const createEvent = await this.eventRepository.create(myEvent);
+    const createdEvent = await this.eventRepository.save(createEvent);
    
     
-    if (createEventDto.isFeatured){
-      await this.featuredEventEntity.create({id: event.id})
+    if (createdEvent.isFeatured){
+      const createfeaturedEvent = await this.featuredEventEntity.create({event: createdEvent.id})
+      await this.featuredEventEntity.save(createfeaturedEvent)
     }
-    return event;
+    return createdEvent;
   }
 
   async findAll() {
     return await this.eventRepository.find();
   }
 
-  async findOne(id: number) {
-    return await this.eventRepository.findOne(id);
+  async findOne(conditions: FindConditions<EventEntity>,
+    options?: any) {
+    try {
+
+      return await this.eventRepository.findOneOrFail(conditions, options)
+    }
+    catch (error) {
+      throw new NotFoundException(error.message)
+    }
   }
 
   async update(id: number, updateEventDto: UpdateEventDto) {

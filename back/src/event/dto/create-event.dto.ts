@@ -1,6 +1,8 @@
+import { Type } from "class-transformer";
 import { IsDate, IsNotEmpty, IsOptional } from "class-validator";
 
 export class CreateEventDto {
+  
   @IsNotEmpty()
   title: string;
   
@@ -8,13 +10,20 @@ export class CreateEventDto {
   description: string;
   
   @IsOptional()
-  photos: Array<any>;
+  photos: Array<Express.Multer.File> 
+
+  @IsOptional()
+  imageHeader: Express.Multer.File 
 
   @IsNotEmpty()
+  @Type(() => Boolean)
   isFeatured: Boolean;
 
+  @Type(() => Date)
   @IsDate()
   startDate: Date;
+
+  @Type(() => Date)
   @IsDate()
   stopDate: Date;
 }

@@ -4,8 +4,6 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { ControllerVersionHelper } from 'src/helpers/controllerversion.helper';
 import { FileFieldsInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import configMulter from 'src/config/multer.config';
 
 
@@ -19,11 +17,8 @@ export class EventController {
     {name: 'imageHeader', maxCount: 1},
   ],
     { storage: configMulter }))
-  create(@Body() createEventDto: any, @UploadedFiles() images: {photos:[Express.Multer.File], imageHeader:Express.Multer.File}) {
-    createEventDto.photos = images.photos.map(el => el.filename);
-    createEventDto.imageHeader = images.imageHeader? images.imageHeader[0]: undefined;
-
-    return this.eventService.create(createEventDto);
+  create(@Body()  createEventDto: CreateEventDto, @UploadedFiles() images: {photos:[Express.Multer.File], imageHeader:Express.Multer.File}) {
+    return this.eventService.create({data: createEventDto, images});
   }
 
   @Get()
@@ -33,7 +28,7 @@ export class EventController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.eventService.findOne(+id);
+    return this.eventService.findOne({id});
   }
 
   @Patch(':id')

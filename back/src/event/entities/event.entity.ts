@@ -24,8 +24,13 @@ export class EventEntity {
   stopDate: Date;
 
   @Column({ type: 'json' })
-  photos:Array<any>;
-
+  images: {
+    gallery: Array<string> | undefined | null,
+    header: string | undefined | null
+  };
+  @Column()
+  isFeatured: Boolean;
+  
   @CreateDateColumn()
   createdDate: Date;
 
