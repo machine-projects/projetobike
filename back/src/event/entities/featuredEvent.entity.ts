@@ -13,16 +13,6 @@ export class FeaturedEventEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'json' })
-  photos: [
-    {
-      patch: string;
-      filename: string;
-      img_description: string | null | undefined;
-      header: boolean;
-    } | null,
-  ];
-
   @CreateDateColumn()
   createdDate: Date;
 

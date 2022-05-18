@@ -1,14 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
+import { ControllerVersionHelper } from 'src/helpers/controllerversion.helper';
+import { FileFieldsInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import configMulter from 'src/config/multer.config';
 
-@Controller('event')
+
+@Controller(ControllerVersionHelper.v1 + 'event')
 export class EventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(private readonly eventService: EventService) { }
 
   @Post()
-  create(@Body() createEventDto: CreateEventDto) {
+  @UseInterceptors(FileFieldsInterceptor([
+    {name: 'photos', maxCount: 8},
+    {name: 'imageHeader', maxCount: 1},
+  ],
+    { storage: configMulter }))
+  create(@Body() createEventDto: any, @UploadedFiles() images: {photos:[Express.Multer.File], imageHeader:Express.Multer.File}) {
+    createEventDto.photos = images.photos.map(el => el.filename);
+    createEventDto.imageHeader = images.imageHeader? images.imageHeader[0]: undefined;
+
     return this.eventService.create(createEventDto);
   }
 

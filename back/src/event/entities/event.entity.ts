@@ -23,6 +23,9 @@ export class EventEntity {
   @Column()
   stopDate: Date;
 
+  @Column({ type: 'json' })
+  photos:Array<any>;
+
   @CreateDateColumn()
   createdDate: Date;
 
