@@ -28,11 +28,11 @@ export class EventService {
   }
 
   async findAll() {
-    return `This action returns all event`;
+    return await this.eventRepository.find();
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} event`;
+    return await this.eventRepository.findOne(id);
   }
 
   async update(id: number, updateEventDto: UpdateEventDto) {
