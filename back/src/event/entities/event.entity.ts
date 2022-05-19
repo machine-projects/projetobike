@@ -22,15 +22,15 @@ export class EventEntity {
 
   @Column()
   stopDate: Date;
-
+  
   @Column({ type: 'json' })
   images: {
-    gallery: Array<string> | undefined | null,
-    header: string | undefined | null
+    gallery: any;
+    header: any;
   };
   @Column()
   isFeatured: Boolean;
-  
+
   @CreateDateColumn()
   createdDate: Date;
 

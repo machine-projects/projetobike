@@ -15,7 +15,9 @@ export class EventService {
     private readonly featuredEventEntity: Repository<FeaturedEventEntity>
   ) {}
 
-  async create(event: any) {
+  async create(event: 
+    {data:{title: string, description: string, isFeatured: Boolean, startDate: Date, stopDate: Date}, images: {photos: any, imageHeader: any}
+  }) {
     const myEvent: CreateEventType = {
       title: event.data.title,
       description: event.data.description,
