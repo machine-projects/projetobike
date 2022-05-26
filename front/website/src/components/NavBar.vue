@@ -18,8 +18,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav>
-            <b-nav-item right to="/login/atleta"> ÁREA DO ATLETA </b-nav-item>
-            <b-nav-item right to="/login/organizador">  ÁREA DO ORGANIZADOR</b-nav-item>
+            <b-nav-item right to="/login"> ÁREA DO ATLETA </b-nav-item>
           </b-navbar-nav>
         </b-navbar-nav>
       </b-collapse>
