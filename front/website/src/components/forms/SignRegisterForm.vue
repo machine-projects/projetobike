@@ -37,7 +37,7 @@
                     <input 
                         type="submit" 
                         class="btn btn-primary my-2" 
-                        @click="doLogin"
+                        @click.prevent="doLogin"
                     >
                     <p>
                         Ainda não tem uma conta? 
@@ -102,6 +102,8 @@
 </template>
 
 <script>
+// import axios from 'axios'
+
 export default {
   name: "SignRegisterForm",
  data() {
@@ -120,7 +122,7 @@ export default {
         if (this.emailLogin === "" || this.passwordLogin === "") {
           this.emptyFields = true;
         } else {
-          alert("You are now logged in");
+          this.$emit('loginFields', { "email": this.emailLogin, password: this.passwordLogin})
         }
       },
       
