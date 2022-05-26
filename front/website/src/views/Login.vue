@@ -32,12 +32,14 @@
     },
     methods: {
       async doLogin() {
-          await axios.post('http://localhost:3000/api/v1/auth/login', JSON.stringify(this.loginData), {
+          await axios.post('http://localhost:3000/api/v1/auth/login', {
+            auth: this.loginData
+          }, {
               'Content-Type': 'application/json'
             }
           )
           .then(function (response) {
-            alert(JSON.parse(response));
+            console.log(response);
           })
           .catch(function (error) {
             console.log(error);
