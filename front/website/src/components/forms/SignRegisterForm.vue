@@ -102,7 +102,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
 
 export default {
   name: "SignRegisterForm",
@@ -124,8 +123,7 @@ export default {
         } else {
           this.$emit('loginFields', { "email": this.emailLogin, password: this.passwordLogin})
         }
-      },
-      
+      },      
       doRegister() {
          if (this.emailReg === "" || this.passwordReg === "" || this.confirmReg === "") {
             this.emptyFields = true;
@@ -141,3 +139,9 @@ export default {
 <style scoped>
 
 </style>
+
+
+
+<!-- doLogout() {
+        store.dispatch('logOut');
+      }, -->

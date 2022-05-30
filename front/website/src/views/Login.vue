@@ -13,6 +13,7 @@
  import axios from 'axios'
  import SignRegisterForm from '@/components/forms/SignRegisterForm.vue'
  import NavBar from '@/components/NavBar.vue'
+ import store from '@/store.js';
 
   export default {
     name: 'LoginAtleta',
@@ -37,7 +38,10 @@
             }
           )
           .then(function (response) {
-            console.log(response);
+            localStorage.setItem('access_token', response.data.token);
+          })
+          .then(function () {
+            store.commit('logIn')
           })
           .catch(function (error) {
             console.log(error);

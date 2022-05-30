@@ -8,6 +8,10 @@ import mdiVue from 'mdi-vue/v2'
 import * as mdijs from '@mdi/js'
 import Vuetify from 'vuetify'
 import vuetify from './plugins/vuetify'
+import store from '@/store'
+
+
+
 
 Vue.use(mdiVue, {
   icons: mdijs
@@ -19,5 +23,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   vuetify,
+  store,
   render: h => h(App)
 }).$mount('#app')
