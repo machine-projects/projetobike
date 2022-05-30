@@ -32,9 +32,7 @@
     },
     methods: {
       async doLogin() {
-          await axios.post('http://localhost:3000/api/v1/auth/login', {
-            auth: this.loginData
-          }, {
+          await axios.post('http://localhost:3000/api/v1/auth/login', this.loginData, {
               'Content-Type': 'application/json'
             }
           )
