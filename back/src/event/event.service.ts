@@ -4,7 +4,7 @@ import { FindConditions, Repository } from 'typeorm';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
 import { FeaturedEventEntity } from './entities/featuredEvent.entity';
-import { CreateEventType } from 'src/types/createEvent.type';
+import { CreateEventType } from './types/createEvent.type';
 
 @Injectable()
 export class EventService {
