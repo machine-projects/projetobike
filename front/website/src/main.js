@@ -9,9 +9,12 @@ import * as mdijs from '@mdi/js'
 import Vuetify from 'vuetify'
 import vuetify from './plugins/vuetify'
 import store from '@/store'
+import Vuex from 'vuex'
+import storePlugin from './storePlugin'
 
+Vue.use(Vuex)
 
-
+Vue.use(storePlugin)
 
 Vue.use(mdiVue, {
   icons: mdijs
