@@ -13,6 +13,7 @@ import Vuex from 'vuex'
 import storePlugin from './storePlugin'
 
 Vue.use(Vuex)
+Vue.use(router)
 
 Vue.use(storePlugin)
 
