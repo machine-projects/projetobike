@@ -21,10 +21,11 @@
                     class="form-group"
                     >
                     <input 
-                        v-model="emailLogin" 
-                        type="email" 
+                        v-model="cpfLogin" 
+                        type="text" 
                         class="form-control my-2" 
-                        placeholder="Email" 
+                        placeholder="CPF"
+                        v-mask="'###.###.###-##'" 
                         required
                     />
                     <input
@@ -108,7 +109,7 @@ export default {
  data() {
       return {
         registerActive: false,
-        emailLogin: "",
+        cpfLogin: "",
         passwordLogin: "",
         emailReg: "",
         passwordReg: "",
@@ -118,10 +119,10 @@ export default {
     },
     methods: {
       doLogin() {
-        if (this.emailLogin === "" || this.passwordLogin === "") {
+        if (this.cpfLogin === "" || this.passwordLogin === "") {
           this.emptyFields = true;
         } else {
-          this.$emit('loginFields', { "email": this.emailLogin, password: this.passwordLogin})
+          this.$emit('loginFields', { "cpf": this.cpfLogin, password: this.passwordLogin})
         }
       },      
       doRegister() {

@@ -1,3 +1,3 @@
 export const AuthMessage = {
-    PASSWORD_OR_EMAIL_INVALID: 'Email e/ou senha são invalidos'
+    PASSWORD_OR_CPF_INVALID: 'CPF e/ou senha são invalidos'
 }

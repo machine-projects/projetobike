@@ -15,6 +15,22 @@ export class UsersEntity {
     cpf: string;
     @Column()
     password: string;
+    @Column()
+    sex: string;
+    @Column()
+    birthDate: string;
+    @Column()
+    state: string;
+    @Column()
+    city: string;
+    @Column()
+    phoneNumber: string;
+    @Column()
+    emergencyContactName: string;
+    @Column()
+    emergencyContactPhoneNumber: string;
+    @Column()
+    accountType: string;
     @CreateDateColumn()
     createdDate: Date;
     @UpdateDateColumn()

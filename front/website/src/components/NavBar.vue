@@ -18,9 +18,21 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-navbar-nav>
-            <b-nav-item right v-if="$store.state.currentUser == null" to="/login"> ÁREA DE LOGIN </b-nav-item>
+            <div>
+              <b-nav-item right v-if="$store.state.currentUser == null" to="/login"> ÁREA DE LOGIN </b-nav-item>
 
-            <b-nav-item right v-else to="/login"> PERFIL DO ATLETA </b-nav-item>
+          
+              <b-nav-item right v-else v-b-modal.modal-1> PERFIL DO ATLETA </b-nav-item>
+
+              <b-modal id="modal-1" title="Dados do usuário">
+                <p class="text-center"> {{userData.firstName}} </p>
+                <p class="text-center"> {{userData.lastName}} </p>
+
+               
+                 <b-link href="#foo"><mdicon name="view-dashboard" /> Dashboard</b-link>
+                
+              </b-modal>
+            </div>
           </b-navbar-nav>
         </b-navbar-nav>
       </b-collapse>
@@ -31,6 +43,14 @@
 <script>
 export default {
   name: "NavBar",
+  data() {
+    return {
+      userData: "",
+    }
+  },
+  mounted() {
+     this.userData = JSON.parse(localStorage.getItem('current_user'))
+  },
 };
 </script>
 

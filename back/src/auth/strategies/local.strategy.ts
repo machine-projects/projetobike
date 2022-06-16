@@ -8,14 +8,14 @@ import { AuthMessage } from "../message/auth.message";
 export class LocalStrategy extends PassportStrategy(Strategy){
     constructor(private authService: AuthService){
         super({
-            usernameField: 'email'
+            usernameField: 'cpf'
         });
     }
 
-    async validate(email: string, password: string){
-        const user = await this.authService.validateUser(email, password);
+    async validate(cpf: string, password: string){
+        const user = await this.authService.validateUser(cpf, password);
         if (!user) 
-            throw new UnauthorizedException(AuthMessage.PASSWORD_OR_EMAIL_INVALID)
+            throw new UnauthorizedException(AuthMessage.PASSWORD_OR_CPF_INVALID)
 
         return user;
     }

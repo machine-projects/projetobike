@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import DashboardView from '../views/DashboardView.vue'
+import AuthenticationView from '../views/AuthenticationView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'authentication',
+    component: AuthenticationView,
+  },
+  {
+    path: '/dashboard',
     name: 'dashboard',
-    component: DashboardView
+    component: () => import(/* webpackChunkName: "pesquisarEventos" */ '../views/DashboardView.vue')
   },
   {
     path: '/pesquisar-eventos',
@@ -35,6 +40,13 @@ const routes = [
     name: 'meusEventos',
     component: () => import(/* webpackChunkName: "meusEventos" */ '../views/MeusEventos.vue')
   },
+  {
+    path: '/website',
+    name: 'website',
+    beforeEnter() {
+      location.href = 'http://localhost:8080/login'
+    }
+  }
 
 ]
 

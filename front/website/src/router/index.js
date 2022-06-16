@@ -22,7 +22,15 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('../views/Login.vue')
-  }
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    beforeEnter() {
+      location.href = 'http://localhost:8081/#/?token=' + localStorage.getItem('access_token')
+    }
+  },
+  
 ]
 
 const router = new VueRouter({

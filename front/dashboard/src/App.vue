@@ -18,7 +18,7 @@
         <div
           class="text-center"
         >
-          {{ usuario.nome }}
+          {{ usuario.firstName }}
           <p v-if="usuario.atleta">
             Atleta
           </p>
@@ -104,28 +104,7 @@
 <script>
   export default {
     data: () => ({
-      usuario: {
-        nome: 'Arthur André',
-        atleta: false,
-        eventos: [
-          {
-            nome: 'Corrida de Sao Silvestre',
-            data: 1639558800,
-          },
-          {
-            nome: 'Corrida de Sao Silvestre',
-            data: 1639558800,
-          },
-          {
-            nome: 'Corrida de Sao Silvestre',
-            data: 1639558800,
-          },
-          {
-            nome: 'Corrida de Sao Silvestre',
-            data: 1639558800,
-          },
-        ]
-      },
+      usuario: "",
       alert: false,
       countDown: 100,
       cards: ['Today', 'Yesterday'],
@@ -141,6 +120,9 @@
         ['mdi-delete', 'Cadastrar Evento', 'cadastrar-evento'],
         ['mdi-send', 'Meus Eventos', 'meus-eventos'],
       ],
-    })
+    }),
+    created() {
+      this.usuario = JSON.parse(localStorage.getItem('current_user'))
+    },
   }
 </script>

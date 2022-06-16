@@ -1,14 +1,11 @@
 import axios from 'axios'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
+import router from '@/router/index'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    plugins: [createPersistedState({
-        storage: window.localStorage,
-    })],
     state: {
         accessToken:  localStorage.getItem('access_token'),
         currentUser : JSON.parse(localStorage.getItem('current_user'))
@@ -28,6 +25,9 @@ export default new Vuex.Store({
                 })
             .catch((error) => {
                 console.log(error)
+                alert('Login Falhou')
+                router.push('/website')
+
             })
             },
             logOut(state) {

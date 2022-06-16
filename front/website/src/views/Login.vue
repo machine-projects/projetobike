@@ -5,6 +5,8 @@
         <SignRegisterForm 
           @loginFields="loginData = $event"
         />
+
+        <button @click="logOut"> deslogar </button>
   </div>
   </div>
 </template>
@@ -14,6 +16,7 @@
  import SignRegisterForm from '@/components/forms/SignRegisterForm.vue'
  import NavBar from '@/components/NavBar.vue'
  import store from '@/store.js';
+ import router from '@/router/index'
 
   export default {
     name: 'LoginAtleta',
@@ -42,10 +45,14 @@
           })
           .then(function () {
             store.commit('logIn')
+            router.push('/dashboard')
           })
           .catch(function (error) {
             console.log(error);
           });
+      },
+      logOut() {
+        this.$store.dispatch('logOut')
       }
     }
   }

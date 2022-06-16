@@ -11,6 +11,9 @@ import vuetify from './plugins/vuetify'
 import store from '@/store'
 import Vuex from 'vuex'
 import storePlugin from './storePlugin'
+import { VueMaskDirective } from "v-mask";
+
+Vue.directive("mask", VueMaskDirective);
 
 Vue.use(Vuex)
 Vue.use(router)
