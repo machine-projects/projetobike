@@ -1,4 +1,4 @@
-<template>
+r<template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand to="/">SEU LOGO AQUI</b-navbar-brand>
@@ -29,7 +29,20 @@
                 <p class="text-center"> {{userData.lastName}} </p>
 
                
-                 <b-link href="#foo"><mdicon name="view-dashboard" /> Dashboard</b-link>
+                 <router-link to="/dashboard"><mdicon name="view-dashboard" /> Ir para o Dashboard</router-link>
+
+              <template #modal-footer>
+                <div class="w-100">
+                  <b-button
+                    variant="primary"
+                    size="sm"
+                    class="float-right"
+                    @click="logOut"
+                  >
+                    Log Out
+                  </b-button>
+                </div>
+              </template>
                 
               </b-modal>
             </div>
@@ -41,6 +54,8 @@
 </template>
 
 <script>
+ import store from '../store';
+
 export default {
   name: "NavBar",
   data() {
@@ -51,6 +66,12 @@ export default {
   mounted() {
      this.userData = JSON.parse(localStorage.getItem('current_user'))
   },
+  methods: {
+    logOut() {
+      store.dispatch('logOut');
+      this.$bvModal.hide('modal-1')
+    }
+  }
 };
 </script>
 

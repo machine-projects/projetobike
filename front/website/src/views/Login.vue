@@ -4,9 +4,8 @@
   <div id="atleta-page" class="d-flex flex-column justify-content-center">
         <SignRegisterForm 
           @loginFields="loginData = $event"
+          @registerFields="registerData = $event  "
         />
-
-        <button @click="logOut"> deslogar </button>
   </div>
   </div>
 </template>
@@ -17,6 +16,7 @@
  import NavBar from '@/components/NavBar.vue'
  import store from '@/store.js';
  import router from '@/router/index'
+import jwt_decode from 'jwt-decode'
 
   export default {
     name: 'LoginAtleta',
@@ -27,6 +27,7 @@
     data() {
       return {
         loginData: "",
+        registerData: "",
       }
     },
     watch: {
@@ -41,7 +42,10 @@
             }
           )
           .then(function (response) {
+            var token = JSON.stringify(response.data.token)
+            var decodedToken = jwt_decode(token)
             localStorage.setItem('access_token', response.data.token);
+            localStorage.setItem('userId', decodedToken.sub)
           })
           .then(function () {
             store.commit('logIn')
@@ -50,9 +54,6 @@
           .catch(function (error) {
             console.log(error);
           });
-      },
-      logOut() {
-        this.$store.dispatch('logOut')
       }
     }
   }
@@ -60,6 +61,7 @@
 
 <style scoped>
   #atleta-page {
-    height: calc(100vh - 58px);
+    padding: 15px 0px;
+    min-height: calc(100vh - 58px);
   }
 </style>

@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, BeforeInsert, Entity } from "typeorm";
+import { Column ,CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, BeforeInsert, Entity } from "typeorm";
 import { hashSync } from 'bcrypt'
 
 @Entity({name: 'users'})
@@ -21,7 +21,7 @@ export class UsersEntity {
     birthDate: string;
     @Column()
     state: string;
-    @Column()
+    @Column() 
     city: string;
     @Column()
     phoneNumber: string;

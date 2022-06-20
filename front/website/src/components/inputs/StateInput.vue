@@ -14,6 +14,8 @@
           <b-form-select
            v-model="selectedState"
            @change="selectState"
+           class="pl-4 w-75 rounded"
+           style="border: 1px solid #ced4da"
           >
            <b-form-select-option 
             disabled

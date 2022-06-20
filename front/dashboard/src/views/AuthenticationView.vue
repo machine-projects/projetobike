@@ -4,11 +4,13 @@
 
 <script>
 import store from '../store'
+import router from '@/router/index'
 
 export default {
   created() {
     this.setToken()
     store.commit('logIn')
+    router.push('/dashboard')
   },
   methods: {
     setToken() {

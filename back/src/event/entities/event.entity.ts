@@ -22,6 +22,12 @@ export class EventEntity {
 
   @Column()
   stopDate: Date;
+
+  @Column()
+  state: string;
+
+  @Column()
+  city: string;
   
   @Column({ type: 'json' })
   images: {

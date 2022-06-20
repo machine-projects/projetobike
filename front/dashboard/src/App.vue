@@ -85,7 +85,7 @@
       
       <v-spacer></v-spacer>
 
-      <b-alert></b-alert>
+      
 
       <v-icon
       > mdi-logout-variant </v-icon>
@@ -110,13 +110,13 @@
       cards: ['Today', 'Yesterday'],
       drawer: null,
       linksAtleta: [
-        ['mdi-view-dashboard', 'Dashboard', '/'],
+        ['mdi-view-dashboard', 'Dashboard', '/dashboard'],
         ['mdi-magnify', 'Pesquisar Eventos', '/pesquisar-eventos'],
         ['mdi-playlist-check', 'Inscrições', '/minhas-inscricoes'],
         ['mdi-account-cash-outline', 'Pagamentos', '/meus-pagamentos'],
       ],
       linksOrganizador: [
-        ['mdi-view-dashboard', 'Dashboard', '/'],
+        ['mdi-view-dashboard', 'Dashboard', '/dashboard'],
         ['mdi-delete', 'Cadastrar Evento', 'cadastrar-evento'],
         ['mdi-send', 'Meus Eventos', 'meus-eventos'],
       ],

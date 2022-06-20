@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import AuthenticationView from '../views/AuthenticationView.vue'
 
+
 Vue.use(VueRouter)
+
 
 const routes = [
   {
@@ -13,7 +15,7 @@ const routes = [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: () => import(/* webpackChunkName: "pesquisarEventos" */ '../views/DashboardView.vue')
+    component: () => import(/* webpackChunkName: "pesquisarEventos" */ '../views/DashboardView.vue'),
   },
   {
     path: '/pesquisar-eventos',

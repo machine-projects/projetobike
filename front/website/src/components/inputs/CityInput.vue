@@ -14,10 +14,12 @@
             <b-form-select 
             v-model="selectedCity"
               @change="selectCity"
+              class="pl-2 w-75 rounded"
+              style="border: 1px solid #ced4da"
             >
             <b-form-select-option 
               disabled
-              value="null"
+              value="undefined"
             >
             Escolha a Cidade
             </b-form-select-option> 
@@ -41,7 +43,7 @@ export default {
   data() {
     return {
       cities: [],
-      selectedCity: null
+      selectedCity: undefined
     }
   },
   name: "CityInput",

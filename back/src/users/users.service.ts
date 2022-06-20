@@ -29,6 +29,14 @@ export class UsersService {
         'email',
         'createdDate',
         'updatedDate',
+        'sex',
+        'birthDate',
+        'state',
+        'city',
+        'phoneNumber',
+        'emergencyContactName',
+        'emergencyContactPhoneNumber',
+        'accountType'
       ],
     });
   }

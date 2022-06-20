@@ -16,7 +16,7 @@ export class EventService {
   ) {}
 
   async create(event: 
-    {data:{title: string, description: string, isFeatured: Boolean, startDate: Date, stopDate: Date}, images: {photos: any, imageHeader: any}
+    {data:{title: string, city: string, state: string, description: string, isFeatured: Boolean, startDate: Date, stopDate: Date}, images: {photos: any, imageHeader: any}
   }) {
     const myEvent: CreateEventType = {
       title: event.data.title,
@@ -27,7 +27,9 @@ export class EventService {
       },
       isFeatured: event.data.isFeatured,
       startDate: event.data.startDate,
-      stopDate: event.data.stopDate
+      stopDate: event.data.stopDate,
+      city: event.data.city,
+      state: event.data.state
     }
  
     const createEvent = await this.eventRepository.create(myEvent);

@@ -9,11 +9,11 @@ import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller(ControllerVersionHelper.v1 + 'event')
-@UseGuards(AuthGuard('jwt'))
 export class EventController {
   constructor(private readonly eventService: EventService) { }
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(FileFieldsInterceptor([
     {name: 'photos', maxCount: 8},
     {name: 'imageHeader', maxCount: 1},
@@ -34,11 +34,13 @@ export class EventController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'))
   update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
     return this.eventService.update(+id, updateEventDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   remove(@Param('id') id: string) {
     return this.eventService.remove(+id);
   }

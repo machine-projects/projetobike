@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     plugins: [createPersistedState({
-        storage: window.localStorage,
+        storage: window.sessionStorage,
     })],
     state: {
         accessToken:  localStorage.getItem('access_token'),
@@ -15,8 +15,9 @@ export default new Vuex.Store({
         },
         mutations: {
             logIn() {
+            var userId = localStorage.getItem('userId')
             axios
-            .get('http://localhost:3000/api/v1/users/c1cbc41f-f122-4035-a392-20576325ea91', 
+            .get(`http://localhost:3000/api/v1/users/${userId}`, 
                 { headers: { Authorization: 'Bearer ' + localStorage.getItem('access_token') } })
             .then(response => {
                 const userData = JSON.stringify(response.data)

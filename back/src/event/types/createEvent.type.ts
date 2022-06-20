@@ -5,6 +5,8 @@ export type CreateEventType = {
     gallery: Object | undefined | null;
     header: Object | undefined | null;
   };
+  city: string;
+  state: string;
   isFeatured: Boolean;
   startDate: Date;
   stopDate: Date;

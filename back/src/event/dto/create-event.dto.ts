@@ -12,6 +12,12 @@ export class CreateEventDto {
   @IsOptional()
   photos: Array<Express.Multer.File> 
 
+  @IsNotEmpty()
+  state: string;
+
+  @IsNotEmpty()
+  city: string;
+
   @IsOptional()
   imageHeader: Express.Multer.File 
 
