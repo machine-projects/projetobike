@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UploadedFiles, UseGuards, StreamableFile } from '@nestjs/common';
 import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
@@ -43,5 +43,10 @@ export class EventController {
   @UseGuards(AuthGuard('jwt'))
   remove(@Param('id') id: string) {
     return this.eventService.remove(+id);
+  }
+
+  @Get('/file/:filename')
+  getFile(@Param('filename') filename: string): Promise<StreamableFile>  {
+    return this.eventService.getFile(filename);
   }
 }

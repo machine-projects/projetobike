@@ -1,5 +1,7 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { createReadStream, fstat } from 'fs';
+import { join } from 'path';
 import { FindConditions, Repository } from 'typeorm';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
@@ -65,4 +67,12 @@ export class EventService {
   async remove(id: number) {
     return `This action removes a #${id} event`;
   }
+  
+  async getFile(filename: string): Promise<StreamableFile> {
+    const file = createReadStream(join('uploads', filename));
+    return new StreamableFile(file)
+  }
+  
+  
+
 }

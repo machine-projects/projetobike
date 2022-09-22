@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, ParseUUIDPipe, UseGuards, Res, StreamableFile } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ControllerVersionHelper } from 'src/helpers/controllerversion.helper';
 import { AuthGuard } from '@nestjs/passport';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 
 @Controller(ControllerVersionHelper.v1 + 'users')
 export class UsersController {
@@ -16,7 +18,7 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   async findAll() {
     return await this.usersService.findAll();
   }
@@ -26,6 +28,7 @@ export class UsersController {
   async findOne(@Param('id') id: string) {
     return await this.usersService.findOne({id});
   }
+
 
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
@@ -39,4 +42,5 @@ export class UsersController {
   async remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.delete(id);
   }
+  
 }
