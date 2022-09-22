@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException, NotFoundException, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { createReadStream, fstat } from 'fs';
+import { createReadStream } from 'fs';
 import { join } from 'path';
 import { FindConditions, Repository } from 'typeorm';
 import { UpdateEventDto } from './dto/update-event.dto';
