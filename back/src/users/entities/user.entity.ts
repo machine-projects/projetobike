@@ -11,7 +11,7 @@ export class UsersEntity {
     lastName: string;
     @Column({unique: true})
     email: string;
-    @Column()
+    @Column({unique: true})
     cpf: string;
     @Column()
     password: string;
