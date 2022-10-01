@@ -46,10 +46,8 @@ import jwt_decode from 'jwt-decode'
             var decodedToken = jwt_decode(token)
             localStorage.setItem('access_token', response.data.token);
             localStorage.setItem('userId', decodedToken.sub)
-          })
-          .then(function () {
             store.commit('logIn')
-            router.push('/dashboard')
+            router.go({ name: 'homePage' })
           })
           .catch(function (error) {
             console.log(error);

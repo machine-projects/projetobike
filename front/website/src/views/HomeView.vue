@@ -66,7 +66,7 @@
           <b-container>
             <b-row>
               <b-col
-                class="py-2"
+                class="py-2 my-5"
                 sm="12"
                 md="4"
                 lg="3"
@@ -77,9 +77,9 @@
                  <div type="ticket" class="flex-column w-100 text-center h-100"> 
                   <div class="top --flex-column" style="height: calc(90% - 10px)">
                     <div class="bandname -bold"> {{ event.title }}</div>
-                    <div class="tourname">  {{ event.description }} </div>
+                    <div class="tourname">  <!-- INSERIR A MODALIDADE DO EVENTO (MOUNTAIN BIKE, SPEED ETC...) --> </div>
                     <div style="display: flex; flex-direction: column;">
-                      <img class="w-100"  src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/199011/concert.png" alt="" />
+                      <img class="w-100"  :src="`http://localhost:3000/api/v1/event/file/${event.images.header.filename}`" alt="banner eventos" />
                       <div class="deetz --flex-row-j!sb">
                         <div class="event --flex-column">
                           <div class="date"> Data de início {{ event.startDate.substring(0, 10).split('-').reverse().join('-') }} </div>
@@ -94,8 +94,8 @@
                     </div>
                   </div>
                   <div class="rip"></div>
-                  <div class="bottom --flex-row-j!sb" style="height: calc(10% - 10px)">
-                    <a class="buy" href="#">INSCREVER-SE</a>
+                  <div class="bottom --flex-row-j!sb">
+                    <router-link class="buy" :to="{ name: 'eventDetails', params: { id: event.id }}">INSCREVER-SE</router-link>
                   </div>
                 </div>
               </b-col>

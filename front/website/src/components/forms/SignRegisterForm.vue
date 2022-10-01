@@ -16,6 +16,9 @@
                         Login
                     </h1>
                     
+                    <span v-show="emailEmUsoError" class="color-danger"> {{ createUserError }} </span>
+                      <span v-show="usuarioCriadoSuccess" class="color-success"> Usuário criado com sucesso </span>
+
                     <form 
                     class="form-group"
                     >
@@ -251,6 +254,9 @@ export default {
         registerEmergencyContactNameEmpty: false,
         registerEmergencyContactPhoneNumberEmpty: false,
         registerPasswordWrongLength: false,
+        emailEmUsoError: false,
+        createUserError: undefined,
+        usuarioCriadoSuccess: false,
 
       }
     },
@@ -345,10 +351,21 @@ export default {
               "accountType": "atleta"
             })
             .then(function (response) {
-              console.log(response)
+             console.log(response.response)
+
+             if (response.data.statusCode == 201) {
+               let self = this
+               self.usuarioCriadoSuccess = true;
+             }
+
             })
             .catch(function (error)   {
-    console.log(error);
+             console.log(error.response);
+              if (error.response.data.statusCode == 404) {
+                let self = this
+               self.emailEmUsoError = true;
+               self.usuarioCriadoSuccess = error.response.data.message[0]
+             }
   });
 
             }
