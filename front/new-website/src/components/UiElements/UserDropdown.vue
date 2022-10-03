@@ -1,22 +1,19 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
-import { useUserStore } from '../../store/userStore';
-import { mapActions } from 'pinia';
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useUserStore } from '@/stores/userStore';
+import { useRouter } from 'vue-router';
 
-export default defineComponent({
-  data() {
-    return {
-      showUserMenu: false as boolean
-    }
-  },
-  methods: {
-    ...mapActions(useUserStore, ['changeLogInState']),
-    doLogOut() {
-      useUserStore().$reset()
-      this.$router.push({ name: '/' })
-    }
-  }
-})
+const userStore = useUserStore()
+const router = useRouter()
+
+const showUserMenu = ref<boolean>(false)
+
+const doLogOut = () => {
+  localStorage.clear();
+  userStore.$reset();
+  router.push({ name: '/' })
+}
+
 </script>
 
 <template>

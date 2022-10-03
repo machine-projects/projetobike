@@ -1,11 +1,10 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { defineProps } from 'vue';
 
-export default defineComponent({
-  props: {
-    placeholder: String
-  }
-})
+const props = defineProps<{
+  placeholder: string
+}>()
+
 </script>
 
 

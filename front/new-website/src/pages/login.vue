@@ -1,7 +1,7 @@
 <script lang="ts">
 import { ChevronRightIcon } from '@heroicons/vue/24/outline';
 import { mapActions } from 'pinia';
-import { useUserStore } from '../store/userStore';
+import { useUserStore } from '../stores/userStore';
 
 
 export default defineComponent({
@@ -21,8 +21,9 @@ export default defineComponent({
       this.changeLogInState({
         cpf: this.cpf,
         password: this.password
-      })
-      // this.$router.push({ name: '/' })
+      }).then(_res => {
+        this.$router.push({ name: '/' })
+      }).catch(err => alert(err))
     }
   }
 })

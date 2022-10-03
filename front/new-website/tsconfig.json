@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "allowJs": true
+    "allowJs": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "exclude": ["node_modules", "dist"],
   "include": [
@@ -11,6 +14,6 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.vue"
-, "src/store/userStore.js"  ],
+  ],
   "extends": "@vue/tsconfig/tsconfig.json"
 }

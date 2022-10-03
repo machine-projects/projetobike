@@ -1,39 +1,43 @@
-import axios from 'axios'
-import { type UserLogin, ACCESS_TOKEN, IS_LOGGED_IN } from './UserTypes'
-import { useUserStore } from '../../store/userStore'
-import type {
-  AxiosRequestConfig,
-  AxiosInterceptorManager,
-  AxiosResponse
+import { useUserStore } from '@/stores/userStore'
+import { type UserResponseData, USERS_API } from '@/types/UserTypes'
+import axios, {
+  type AxiosInstance,
+  type AxiosResponse,
+  type Method
 } from 'axios'
 
-const loginConfig: AxiosRequestConfig = {
-  baseURL: import.meta.env.VITE_API_URL,
-  headers: { 'Content-Type': 'application/json' }
-}
+// INSTANCE CREATION
+const userInstance: AxiosInstance = axios.create({
+  baseURL: 'http://localhost:3000',
+  timeout: 3000
+})
+//
 
-const login = axios.create(loginConfig as AxiosRequestConfig)
+// GET AND DELETE REQUEST INTERCEPTOR
+// :: INJECT BEARER TOKEN ::
+userInstance.interceptors.request.use((config) => {
+  const userStore = useUserStore()
 
-login.interceptors.response.use<AxiosInterceptorManager<AxiosResponse>>(
-  (res) => {
-    const { data } = res
-    const store = useUserStore()
-    store.access_token = data.token
-    store.isLoggedIn = !store.isLoggedIn
+  const configEqualsGet = config.method === 'get' || config.method === 'GET'
+  const configEqualsDelete =
+    config.method === 'delete' || config.method === 'DELETE'
 
-    localStorage.setItem(ACCESS_TOKEN, data.token)
-    localStorage.setItem(IS_LOGGED_IN, 'true')
-
-    return data.token
-  },
-  function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    console.log('errooooo')
-    return Promise.reject(error)
+  if (
+    (configEqualsGet || configEqualsDelete) &&
+    !(userStore.bearerToken instanceof Error)
+  ) {
+    config.headers = {
+      Authorization: 'Bearer ' + userStore.bearerToken
+    }
   }
-)
 
-export const getAuth = (data: UserLogin) => {
-  return login.post('http://localhost:3000/api/v1/auth/login', data)
+  return config
+})
+//
+
+// USERS INSTANCE METHODS
+const fetchUsers = (): Promise<AxiosResponse<UserResponseData, any>> => {
+  return userInstance.get(USERS_API)
 }
+
+export { fetchUsers }

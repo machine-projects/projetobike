@@ -1,5 +1,5 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { defineProps } from 'vue';
 
 interface Option {
   name: string
@@ -7,12 +7,11 @@ interface Option {
   id: string
 }
 
-export default defineComponent({
-  props: {
-    name: String,
-    options: Array<Option>
-  }
-})
+const props = defineProps<{
+  name: string,
+  options?: Option[]
+}>()
+
 </script>
 
 

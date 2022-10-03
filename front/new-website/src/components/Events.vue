@@ -1,12 +1,11 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { onMounted } from 'vue';
+import { fetchUsers } from '@/services/user/UserService';
 
-export default defineComponent({
-  data() {
-    return {
-
-    }
-  }
+onMounted(() => {
+  fetchUsers().then((res) => {
+    console.log(res)
+  })
 })
 </script>
 

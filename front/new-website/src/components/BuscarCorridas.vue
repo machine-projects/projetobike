@@ -1,32 +1,6 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
-import {
-  BriefcaseIcon,
-  CalendarIcon,
-  CheckIcon,
-  ChevronDownIcon,
-  CurrencyDollarIcon,
-  LinkIcon,
-  MapPinIcon,
-  PencilIcon,
-} from '@heroicons/vue/20/solid'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+<script setup lang="ts">
+import { CheckIcon } from '@heroicons/vue/20/solid'
 
-export default defineComponent({
-  data() {
-    return {
-
-    }
-  },
-  components: {
-    BriefcaseIcon,
-    CalendarIcon,
-    CheckIcon,
-    ChevronDownIcon,
-    CurrencyDollarIcon,
-    MapPinIcon
-  }
-})
 </script>
 
 <template>
