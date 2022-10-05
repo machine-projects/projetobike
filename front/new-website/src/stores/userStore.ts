@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { getAuth } from '../services/user/AuthService'
+import { getAuth } from '../services/AuthService'
 import { useLocalStorage } from '@vueuse/core'
 import { IS_LOGGED_IN, ACCESS_TOKEN } from '../types/UserTypes'
 

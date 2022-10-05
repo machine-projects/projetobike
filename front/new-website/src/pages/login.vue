@@ -11,7 +11,9 @@ export default defineComponent({
   data() {
     return {
       cpf: '' as string,
-      password: '' as string
+      password: '' as string,
+      error: false as boolean,
+      message: '' as string
     }
   },
   methods: {
@@ -23,7 +25,13 @@ export default defineComponent({
         password: this.password
       }).then(_res => {
         this.$router.push({ name: '/' })
-      }).catch(err => alert(err))
+      }).catch(err => {
+        this.message = err.response.data.message
+        this.error = true
+        setTimeout(() => {
+          this.error = false
+        }, 5000)
+      })
     }
   }
 })
@@ -34,7 +42,11 @@ export default defineComponent({
     <form @submit.prevent="doLogin" class="bg-white dark:bg-gray-900">
       <div class="flex justify-center min-h-screen">
 
-        <div class="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
+        <div class="flex flex-col justify-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
+          <div v-if="error"
+            class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+            <span class="font-medium">Algo deu errado!</span> {{ message }}.
+          </div>
           <div class="w-full">
             <h1 class="text-2xl font-semibold tracking-wider text-gray-800 capitalize dark:text-white">
               Entrar.
@@ -47,7 +59,7 @@ export default defineComponent({
             <span class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
               <div>
                 <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">CPF</label>
-                <input autocomplete="username" v-model="cpf" type="text" placeholder="John"
+                <input autocomplete="username" v-model="cpf" type="text" placeholder="John" v-mask="'000.000.000-00'"
                   class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
               </div>
 
