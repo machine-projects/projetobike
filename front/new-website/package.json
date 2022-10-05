@@ -7,6 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@devindex/vue-mask": "^2.0.3",
     "@vueuse/core": "^9.3.0",
     "@vueuse/head": "^0.7.11",
     "axios": "^0.27.2",
