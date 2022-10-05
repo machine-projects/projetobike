@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
-import type { UserAuthFields } from '../../types/AuthTypes'
-import { useUserStore } from '../../stores/userStore'
+import { API_AUTH, type UserAuthFields } from '../types/AuthTypes'
+import { useUserStore } from '../stores/userStore'
 
 const login: AxiosInstance = axios.create({
   baseURL: 'http://localhost:3000/',
@@ -25,7 +25,7 @@ login.interceptors.response.use(
 const getAuth = (
   data: UserAuthFields
 ): Promise<AxiosResponse<{ token: string }, any>> => {
-  return login.post('api/v1/auth/login', data as UserAuthFields)
+  return login.post(API_AUTH, data as UserAuthFields)
 }
 
 export { getAuth }
