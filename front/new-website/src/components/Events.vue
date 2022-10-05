@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { fetchUsers } from '@/services/user/UserService';
 
-onMounted(() => {
-  fetchUsers().then((res) => {
-    console.log(res)
-  })
-})
 </script>
 
 <template>
