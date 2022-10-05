@@ -2,6 +2,8 @@ import { Injectable, InternalServerErrorException, NotFoundException, Streamable
 import { InjectRepository } from '@nestjs/typeorm';
 import { createReadStream } from 'fs';
 import { join } from 'path';
+import { PaginateDto } from 'src/config/dto/paginate.dto';
+import { DefaultPaginateType, PaginateType } from 'src/config/types/paginate.config.type';
 import { FindConditions, Repository } from 'typeorm';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
@@ -45,8 +47,10 @@ export class EventService {
     return createdEvent;
   }
 
-  async findAll() {
-    return await this.eventRepository.find();
+  async findAll(filter: DefaultPaginateType) {
+    
+    const find = await this.eventRepository.find({...filter});
+    return find;
   }
 
   async findOne(conditions: FindConditions<EventEntity>,
