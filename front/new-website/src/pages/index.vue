@@ -1,8 +1,11 @@
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { getEvents } from '@/services/EventService';
+import { onMounted } from 'vue';
 
-export default defineComponent({
-
+onMounted(() => {
+  setTimeout(() => {
+    getEvents()
+  }, 2000)
 })
 </script>
   
