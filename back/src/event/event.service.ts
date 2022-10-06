@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import { PaginateDto } from 'src/config/dto/paginate.dto';
-import { DefaultPaginateType, PaginateType } from 'src/config/types/paginate.config.type';
+import pgToDefaultKeys, { paginateResponse } from 'src/config/paginate.config';
 import { Repository } from 'typeorm';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
@@ -47,14 +47,13 @@ export class EventService {
     return createdEvent;
   }
 
-  async findAll(filter: DefaultPaginateType) {
-    
-    const find = await this.eventRepository.find({...filter});
-    return find;
+  async findAll(params : PaginateDto) {
+    const paginate = pgToDefaultKeys(params);
+    const find = await this.eventRepository.findAndCount({...paginate.ormPg});
+    return paginateResponse(find, paginate.viewPg);
   }
 
-  async findOne(contions: any,
-    ) {
+  async findOne(contions: any) {
     try {
 
       return await this.eventRepository.findOneOrFail( {where: contions})

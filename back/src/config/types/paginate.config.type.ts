@@ -1,11 +1,15 @@
-export type PaginateType = {
+export type PaginateViewType = {
     page: number;
     limit: number;
   };
 
   
-export type DefaultPaginateType = {
+export type PaginateOrmType = {
     skip: number;
     take: number;
   };
 
+export type PaginateType = {
+  paginateViewType: PaginateViewType
+  paginateOrmType: PaginateOrmType
+}

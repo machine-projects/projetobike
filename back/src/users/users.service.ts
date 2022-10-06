@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOneOptions, Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
+import { PaginateDto } from 'src/config/dto/paginate.dto';
+import pgToDefaultKeys, { paginateResponse } from 'src/config/paginate.config';
+import {  Repository } from 'typeorm';
 import { UsersEntity } from './entities/user.entity';
 import { userMessage } from './messages/users.messages';
 
@@ -21,26 +22,21 @@ export class UsersService {
     return createdUser
   }
 
-  async findAll() {
-    return await this.usersRepository.find({
-      select: [
-        'id',
-        'cpf',
-        'firstName',
-        'lastName',
-        'email',
-        'createdDate',
-        'updatedDate',
-        'sex',
-        'birthDate',
-        'state',
-        'city',
-        'phoneNumber',
-        'emergencyContactName',
-        'emergencyContactPhoneNumber',
-        'accountType'
-      ],
-    });
+  async findAll(params: PaginateDto ) {
+    try {
+      const paginate = pgToDefaultKeys(params);
+      const [allUsers, count] = await this.usersRepository.findAndCount({
+        ...paginate.ormPg
+      });
+      allUsers.map(user => {
+        delete user.password
+        return {...user}
+      })
+      return paginateResponse([allUsers, count], paginate.viewPg)
+    }
+    catch (error) {
+      throw error.message
+    }
   }
 
   async findOne(conditions?: any) {

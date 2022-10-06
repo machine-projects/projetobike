@@ -7,7 +7,6 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import configMulter from 'src/config/multer.config';
 import { AuthGuard } from '@nestjs/passport';
 import { PaginateDto } from 'src/config/dto/paginate.dto';
-import pgToDefaultKeys from 'src/config/paginate.config';
 
 
 @Controller(ControllerVersionHelper.v1 + 'event')
@@ -27,8 +26,8 @@ export class EventController {
 
   @Get()
   
-  findAll(@Query() getParam : PaginateDto  = {limit: '10', page: '0'}) {
-    return this.eventService.findAll(pgToDefaultKeys(getParam));
+  findAll(@Query() getParam : PaginateDto) {
+    return this.eventService.findAll(getParam);
   }
 
   @Get(':id')
