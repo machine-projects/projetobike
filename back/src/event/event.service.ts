@@ -4,7 +4,7 @@ import { createReadStream } from 'fs';
 import { join } from 'path';
 import { PaginateDto } from 'src/config/dto/paginate.dto';
 import { DefaultPaginateType, PaginateType } from 'src/config/types/paginate.config.type';
-import { FindConditions, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
 import { FeaturedEventEntity } from './entities/featuredEvent.entity';
@@ -53,11 +53,11 @@ export class EventService {
     return find;
   }
 
-  async findOne(conditions: FindConditions<EventEntity>,
-    options?: any) {
+  async findOne(contions: any,
+    ) {
     try {
 
-      return await this.eventRepository.findOneOrFail(conditions, options)
+      return await this.eventRepository.findOneOrFail( {where: contions})
     }
     catch (error) {
       throw new NotFoundException(error.message)
@@ -65,6 +65,8 @@ export class EventService {
   }
 
   async update(id: number, updateEventDto: UpdateEventDto) {
+   
+   
     return `This action updates a #${id} event`;
   }
 

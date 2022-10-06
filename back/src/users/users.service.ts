@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindConditions, FindOneOptions, Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersEntity } from './entities/user.entity';
 import { userMessage } from './messages/users.messages';
@@ -13,10 +13,12 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: any) {
-    if (await this.usersRepository.findOne({ email: createUserDto.email }))
-      throw new NotFoundException(userMessage.existEmail);
+    if (await this.usersRepository.findOne({where: { cpf: createUserDto.cpf} }))
+      throw new NotFoundException(userMessage.existCpf);
     const user = await this.usersRepository.create(createUserDto);
-    return await this.usersRepository.save(user);
+    const createdUser: any = await this.usersRepository.save(user);
+    delete createdUser.password
+    return createdUser
   }
 
   async findAll() {
@@ -41,29 +43,33 @@ export class UsersService {
     });
   }
 
-  async findOne(conditions: FindConditions<UsersEntity>, options?: any) {
+  async findOne(conditions?: any) {
     try {
-      return this.usersRepository.findOneOrFail(conditions, options);
+      return this.usersRepository.findOneOrFail({where: conditions});
     } catch (error) {
       throw new NotFoundException(error.message);
     }
   }
 
-  async findOneNotPass(conditions: FindConditions<UsersEntity>) {
-    // { select: ['id', 'cpf', 'firstName', 'lastName', 'email', 'createdDate', 'updatedDate'] }
-    let options = {
-      select: [
-        'id',
-        'cpf',
-        'firstName',
-        'lastName',
-        'email',
-        'createdDate',
-        'updatedDate',
-      ],
-    };
+  async findOneNotPass(condition: any) {
 
-    return await this.findOne(conditions, options);
+    return await this.usersRepository.findOneOrFail({select: [
+      'id',
+      'cpf',
+      'firstName',
+      'lastName',
+      'email',
+      'createdDate',
+      'updatedDate',
+      'sex',
+      'birthDate',
+      'state',
+      'city',
+      'phoneNumber',
+      'emergencyContactName',
+      'emergencyContactPhoneNumber',
+      'accountType'
+    ], where: {...condition}});
   }
 
   async update(id: string, data) {
@@ -84,7 +90,12 @@ export class UsersService {
   }
 
   async delete(id: string) {
-    await this.findOne({ id }, {});
-    return await this.usersRepository.delete({ id });
+    try{
+      const user = await this.findOneNotPass({ id });
+      await this.usersRepository.delete( { id });
+      return user
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 }

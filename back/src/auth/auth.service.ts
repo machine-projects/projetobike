@@ -20,7 +20,7 @@ export class AuthService {
     async validateUser(cpf: string, password: string) {
         let user: UsersEntity;
         try {
-            user = await this.userService.findOne({ cpf }, {})
+            user = await this.userService.findOne({ cpf })
         }
         catch (e) {
             return null

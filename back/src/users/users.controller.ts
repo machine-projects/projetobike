@@ -38,7 +38,7 @@ export class UsersController {
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  @HttpCode(HttpStatus.NO_CONTENT)
+  // @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.delete(id);
   }
