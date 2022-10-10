@@ -1,10 +1,6 @@
 import { useUserStore } from '@/stores/userStore'
 import { type UserResponseData, USERS_API } from '@/types/UserTypes'
-import axios, {
-  type AxiosInstance,
-  type AxiosResponse,
-  type Method
-} from 'axios'
+import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
 // INSTANCE CREATION
 const userInstance: AxiosInstance = axios.create({
@@ -40,4 +36,9 @@ const fetchUsers = (): Promise<AxiosResponse<UserResponseData, any>> => {
   return userInstance.get(USERS_API)
 }
 
-export { fetchUsers }
+const fetchUser = (
+  id: string
+): Promise<AxiosResponse<UserResponseData, any>> => {
+  return userInstance.get(USERS_API + '/' + id)
+}
+export { fetchUsers, fetchUser }

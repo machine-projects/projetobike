@@ -40,3 +40,4 @@ export interface CreateUserData {
 export const ACCESS_TOKEN = 'access_token'
 export const IS_LOGGED_IN = 'is_logged_in'
 export const USERS_API = 'api/v1/users'
+export const USER = 'user'

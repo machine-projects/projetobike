@@ -3,9 +3,7 @@ import { getEvents } from '@/services/EventService';
 import { onMounted } from 'vue';
 
 onMounted(() => {
-  setTimeout(() => {
-    getEvents()
-  }, 2000)
+  getEvents()
 })
 </script>
   
