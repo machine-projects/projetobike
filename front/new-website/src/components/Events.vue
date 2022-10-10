@@ -1,4 +1,18 @@
 <script setup lang="ts">
+import VuePaginationTw from "vue-pagination-tw";
+import { useEventStore } from '@/stores/eventStore';
+import type { EventsResponse } from '@/types/EventTypes';
+import { computed } from 'vue'
+import { getEvents } from "@/services/EventService";
+
+const eventStore = useEventStore();
+const events = computed<EventsResponse>(() => eventStore.events)
+
+const pageChange = (event: any) => {
+  getEvents(12, event).then(res => {
+    eventStore.changeEvent(res)
+  })
+}
 
 </script>
 
@@ -27,24 +41,17 @@
             <p class="font-normal text-base leading-4 text-gray-800">Filtrar</p>
           </div>
           <p class="cursor-pointer hover:underline duration-100 font-normal text-base leading-4 text-gray-600">Mostrando
-            18 eventos</p>
+            {{ events.count }} eventos</p>
         </div>
 
         <div
           class="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 lg:gap-y-6 lg:gap-x-1 sm:gap-y-5 gap-y-3 lg:mt-12 mt-10">
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
-          <EventCard />
+          <EventCard v-for="event in events.data" :key="event.id" :event="event" />
         </div>
 
         <div class="flex justify-center items-center">
-          <button
-            class="hover:bg-gray-700 focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 py-5 md:px-16 md:w-auto w-full lg:mt-28 md:mt-12 mt-10 text-white font-medium text-base leading-4">
-            Carregar Mais
-          </button>
+          <VuePaginationTw :totalItems="events.count" :currentPage="events.currentPage" :perPage="12"
+            @pageChanged="pageChange" :goButton="false" styled="centered" />
         </div>
       </div>
     </div>
