@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException, NotFoundException, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { createReadStream } from 'fs';
+import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';
 import { PaginateDto } from 'src/config/dto/paginate.dto';
 import pgToDefaultKeys, { paginateResponse } from 'src/config/paginate.config';
@@ -74,8 +74,17 @@ export class EventService {
   }
   
   async getFile(filename: string): Promise<StreamableFile> {
-    const file = createReadStream(join('uploads', filename));
-    return new StreamableFile(file)
+    try{
+      if (existsSync(join('uploads', filename))){
+        const file = createReadStream(join('uploads', filename));
+        return new StreamableFile(file)
+      }
+      throw new NotFoundException("A imagem não existe")
+    }
+    catch (error){
+      throw new NotFoundException(error.message)
+      
+    }
   }
   
   
