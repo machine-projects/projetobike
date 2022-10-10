@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -24,9 +25,11 @@ export class EventEntity {
   stopDate: Date;
 
   @Column()
+  @Index()
   state: string;
 
   @Column()
+  @Index()
   city: string;
   
   @Column({ type: 'json' })
@@ -35,6 +38,7 @@ export class EventEntity {
     header: any;
   };
   @Column()
+  @Index()
   isFeatured: Boolean;
 
   @CreateDateColumn()

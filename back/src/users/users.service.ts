@@ -16,6 +16,7 @@ export class UsersService {
   async create(createUserDto: any) {
     if (await this.usersRepository.findOne({where: { cpf: createUserDto.cpf} }))
       throw new NotFoundException(userMessage.existCpf);
+      createUserDto.cpf = createUserDto.cpf.split(".").join("").split("-").join("").trim()
     const user = await this.usersRepository.create(createUserDto);
     const createdUser: any = await this.usersRepository.save(user);
     delete createdUser.password

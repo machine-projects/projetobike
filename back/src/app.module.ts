@@ -20,7 +20,7 @@ import { EventModule } from './event/event.module';
       database: process.env.TYPEORM_DATABASE,
       entities: ['dist/**/*.entity{.js,.ts}'],
       synchronize: true,
-      //autoLoadEntities: true,
+      autoLoadEntities: true,
     } as TypeOrmModuleOptions),
     UsersModule,
     AuthModule,
