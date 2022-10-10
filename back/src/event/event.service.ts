@@ -5,6 +5,9 @@ import { join } from 'path';
 import { PaginateDto } from 'src/config/dto/paginate.dto';
 import pgToDefaultKeys, { paginateResponse } from 'src/config/paginate.config';
 import { Repository } from 'typeorm';
+import { CreateEventDto } from './dto/create-event.dto';
+import { CreateImageEventDto } from './dto/create-image-event.dto';
+import { DeleteEventImageDto } from './dto/delete-event-image.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
 import { FeaturedEventEntity } from './entities/featuredEvent.entity';
@@ -46,6 +49,30 @@ export class EventService {
     }
     return createdEvent;
   }
+  async updateImage(id: string, images: CreateImageEventDto) {
+   
+    const event :any = await this.eventRepository.findOneOrFail( {where: {id}})
+   const newEvent = event;
+    if (images?.imageHeader){
+      newEvent.images.header =  images.imageHeader[0] ;
+    }
+    if (images?.photos){
+      let lengthEvent = event.images.gallery.length;
+      for (let photo of images?.photos)
+      
+      if (lengthEvent < 8 ){
+        newEvent.images.gallery.push(photo);
+      lengthEvent++
+      }
+      else {
+        throw "O numero de imagens exede o suportado"
+      }
+
+    }
+    return await this.eventRepository.merge(event, newEvent)
+
+    
+  }
 
   async findAll(params : PaginateDto) {
     const paginate = pgToDefaultKeys(params);
@@ -63,14 +90,33 @@ export class EventService {
     }
   }
 
-  async update(id: number, updateEventDto: UpdateEventDto) {
-   
-   
-    return `This action updates a #${id} event`;
+  async updateData(id:string, data: UpdateEventDto) {
+    const event = await this.eventRepository.findOneOrFail( {where: {id} });
+    const updateEvent = this.eventRepository.merge(event, data);
+    
+    return await this.eventRepository.save(updateEvent);
   }
-
   async remove(id: number) {
     return `This action removes a #${id} event`;
+  }
+
+  async removeImage(id:string, data:DeleteEventImageDto){
+    const event = await this.eventRepository.findOneOrFail( {where: {id} });
+    
+
+     const newgallery  = event.images.gallery.map(gallery => {
+      let isRealData = data.gallery.find(el => gallery.filename ==  el.filename)
+      if (isRealData){
+        // excluir
+
+      }
+      return gallery
+    }
+
+      )
+
+      return
+     
   }
   
   async getFile(filename: string): Promise<StreamableFile> {

@@ -7,6 +7,8 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import configMulter from 'src/config/multer.config';
 import { AuthGuard } from '@nestjs/passport';
 import { PaginateDto } from 'src/config/dto/paginate.dto';
+import { CreateImageEventDto } from './dto/create-image-event.dto';
+import { DeleteEventImageDto } from './dto/delete-event-image.dto';
 
 
 @Controller(ControllerVersionHelper.v1 + 'event')
@@ -38,7 +40,24 @@ export class EventController {
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
   update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
-    return this.eventService.update(+id, updateEventDto);
+    return this.eventService.updateData(id, updateEventDto);
+  }
+
+  @Post("images/:id")
+  @UseGuards(AuthGuard('jwt'))
+  @UseInterceptors(FileFieldsInterceptor([
+    {name: 'photos', maxCount: 8},
+    {name: 'imageHeader', maxCount: 1},
+  ],
+    { storage: configMulter }))
+  updateImage(@Param('id') id: string, @UploadedFiles() images: CreateImageEventDto) {
+    return this.eventService.updateImage(id, images);
+  }
+
+  @Delete('images/:id')
+  @UseGuards(AuthGuard('jwt'))
+  removeImage(@Param('id') id: string, @Body() deleteEventImage: DeleteEventImageDto) {
+    return this.eventService.removeImage(id, deleteEventImage);
   }
 
   @Delete(':id')
