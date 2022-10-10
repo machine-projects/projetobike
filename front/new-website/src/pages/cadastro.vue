@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import { getCities, getStates } from '@/services/CityService'
+import { ref, reactive } from 'vue'
+import type { Option } from '@/types/CityTypes'
+
+const selectedState = ref<Option | undefined>(undefined)
+const states = reactive<Option[]>([])
+const cities = reactive<Option[]>([])
+
+// ========== WATCH SELECTED STATE PROP TO FETCH STATE CITIES ==========
+watch(selectedState, (newSelectedState, oldSelectedState) => {
+  if (newSelectedState) {
+    getCities(newSelectedState).then(res => {
+      Object.assign(cities, [...res.data])
+    })
+  }
+
+})
+
+// ========================= FETCH STATES ===============================
+onMounted(() => {
+  getStates().then(res => {
+    const temp = res.data.map(({ id, nome, sigla }: Option) => {
+      return { id, nome, sigla: sigla?.toLowerCase() }
+    })
+    states.push(...temp)
+  })
+})
+</script>
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { UserCircleIcon, BriefcaseIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
@@ -149,19 +179,17 @@ export default defineComponent({
 
 
               <div>
-                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Estado</label>
-                <select v-model="state"
-                  class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40">
-                  <option value="" default disabled>Escolha o estado</option>
-                </select>
+                <div class="mt-2 grow flex items-center text-sm text-gray-500">
+                  <SelectInput @@selecionado="selectedState = $event, state = $event.sigla" name="Estado"
+                    :options="states" />
+                </div>
+
               </div>
 
               <div>
-                <label class="block mb-2 text-sm text-gray-600 dark:text-gray-200">Cidade</label>
-                <select v-model="city"
-                  class="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40">
-                  <option value="" selected disabled>Escolha a cidade</option>
-                </select>
+                <div class="mt-2 grow flex items-center text-sm text-gray-500">
+                  <SelectInput @@selecionado="city = $event.nome" name="Cidade" :options="cities" />
+                </div>
               </div>
 
               <div>
