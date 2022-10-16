@@ -4,31 +4,6 @@ import { getCities, getStates } from '@/services/CityService'
 import { ref, reactive } from 'vue'
 import type { Option } from '@/types/CityTypes'
 
-const selectedCity = ref<string>('')
-const selectedState = ref<Option | undefined>(undefined)
-const states = reactive<Option[]>([])
-const cities = reactive<Option[]>([])
-
-// ========== WATCH SELECTED STATE PROP TO FETCH STATE CITIES ==========
-watch(selectedState, (newSelectedState, oldSelectedState) => {
-  console.log(newSelectedState)
-  if (newSelectedState) {
-    getCities(newSelectedState).then(res => {
-      Object.assign(cities, [...res.data])
-    })
-  }
-
-})
-
-// ========================= FETCH STATES ===============================
-onMounted(() => {
-  getStates().then(res => {
-    const temp = res.data.map(({ id, nome, sigla }: Option) => {
-      return { id, nome, sigla: sigla?.toLowerCase() }
-    })
-    states.push(...temp)
-  })
-})
 
 
 </script>
@@ -42,10 +17,10 @@ onMounted(() => {
           Procurar eventos
         </h2>
         <div class="mt-2 grow flex items-center text-sm text-gray-500">
-          <SelectInput @@selecionado="selectedState = $event" name="Estado" :options="states" />
+          <StateInput />
         </div>
         <div class="mt-2 grow flex items-center text-sm text-gray-500">
-          <SelectInput @@selecionado="selectedCity = $event" name="Cidade" :options="cities" />
+          <CityInput />
         </div>
         <div class="mt-7 grow flex items-center text-sm text-gray-500">
           <TextInput placeholder="Nome do evento" />

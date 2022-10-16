@@ -1,5 +1,9 @@
 import { useUserStore } from '@/stores/userStore'
-import { type UserResponseData, USERS_API } from '@/types/UserTypes'
+import {
+  type UserResponseData,
+  USERS_API,
+  type CreateUserData
+} from '@/types/UserTypes'
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
 // INSTANCE CREATION
@@ -41,4 +45,9 @@ const fetchUser = (
 ): Promise<AxiosResponse<UserResponseData, any>> => {
   return userInstance.get(USERS_API + '/' + id)
 }
-export { fetchUsers, fetchUser }
+
+const createUser = (data: CreateUserData): Promise<AxiosResponse> => {
+  return userInstance.post(USERS_API, data)
+}
+
+export { fetchUsers, fetchUser, createUser }

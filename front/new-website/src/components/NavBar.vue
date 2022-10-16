@@ -15,7 +15,7 @@ const openAndCloseBurguer = (): void => { show.value = !show.value }
     <div class="navbar">
       <nav class="relative px-4 py-4 flex justify-between items-center bg-white">
         <router-link class="text-3xl font-bold leading-none" to="/">
-          <img width="150" src="public/assets/big-logo.png" alt="Logo">
+          <img width="150" src="/assets/big-logo.png" alt="Logo">
         </router-link>
         <div class="order-last lg:hidden">
           <button @click="openAndCloseBurguer" class="navbar-burger flex items-center text-blue-600 p-3">

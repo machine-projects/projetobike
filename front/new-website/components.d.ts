@@ -8,7 +8,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BuscarCorridas: typeof import('./src/components/BuscarCorridas.vue')['default']
-    copy: typeof import('./src/components/Events copy.vue')['default']
+    CityInput: typeof import('./src/components/UiElements/CityInput.vue')['default']
+    copy: typeof import('./src/components/UiElements/SelectInput copy.vue')['default']
     EventCard: typeof import('./src/components/UiElements/EventCard.vue')['default']
     Events: typeof import('./src/components/Events.vue')['default']
     Menu: typeof import('@headlessui/vue')['Menu']
@@ -20,6 +21,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SelectInput: typeof import('./src/components/UiElements/SelectInput.vue')['default']
+    StateInput: typeof import('./src/components/UiElements/StateInput.vue')['default']
     TextInput: typeof import('./src/components/UiElements/TextInput.vue')['default']
     UserDropdown: typeof import('./src/components/UiElements/UserDropdown.vue')['default']
   }
