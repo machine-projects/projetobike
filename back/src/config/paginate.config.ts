@@ -1,20 +1,16 @@
 import { PaginateDto } from "./dto/paginate.dto"
 import { PaginateViewType } from "./types/paginate.config.type";
 
-const pgValueToInt = (filter: PaginateDto) => {
-    let page = parseInt(filter.page);
-    let limit = parseInt(filter.limit);
-    page = page>0? page: 1
-     limit = limit>0? limit: 10
-    return {page, limit}
-} ;
+
 const pgToDefaultKeys = (filter: PaginateDto) => {
-    const defaultValue = pgValueToInt(filter)
+    const defaultValue = filter
     const filterToInt: PaginateViewType = defaultValue
     const ormPg = {skip: filterToInt.page -1, take: filterToInt.limit}
-    const viewPg = defaultValue;
+    const viewPg = filter;
     return {ormPg, viewPg}
-} ;
+};
+
+
 
 export default pgToDefaultKeys;
 

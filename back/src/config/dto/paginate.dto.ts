@@ -1,12 +1,21 @@
-import {IsNumberString, IsOptional } from "class-validator";
-import {paginateMessage} from '../messages/paginate.message'
+import { Transform } from "class-transformer";
+import {IsInt, IsNumber, IsNumberString, IsOptional, Max, Min, } from "class-validator";
+import {queryParamsMessage} from '../messages/queryParams.message'
+
+
 
 export class PaginateDto {
   @IsOptional()
-  @IsNumberString({ message: paginateMessage.limit })
-  limit: string;
+  @Transform(({ value }) => parseInt(value))
+  @IsInt({ message: queryParamsMessage.limit })
+  @Min(1)
+  @Max(100)
+  limit: number = 10;
   @IsOptional()
-  @IsNumberString({ message: paginateMessage.page })
-  page : string;
+  @Transform(({ value }) => parseInt(value))
+  @IsInt({ message: queryParamsMessage.page })
+  @Min(1)
+  page : number = 1;
+
 
 }

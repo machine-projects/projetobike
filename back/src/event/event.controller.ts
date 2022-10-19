@@ -9,6 +9,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { PaginateDto } from 'src/config/dto/paginate.dto';
 import { CreateImageEventDto } from './dto/create-image-event.dto';
 import { DeleteEventImageDto } from './dto/delete-event-image.dto';
+import { QueryParamsDto } from 'src/event/dto/params.dto';
 
 
 @Controller(ControllerVersionHelper.v1 + 'event')
@@ -28,7 +29,7 @@ export class EventController {
 
   @Get()
   
-  findAll(@Query() getParam : PaginateDto) {
+  findAll(@Query() getParam : QueryParamsDto) {
     return this.eventService.findAll(getParam);
   }
 
