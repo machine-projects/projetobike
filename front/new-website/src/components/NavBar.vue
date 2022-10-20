@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import { useUserStore } from '@/stores/userStore';
 import { ref } from 'vue';
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router/auto';
 
 const userStore = useUserStore()
 
 const show = ref<boolean>(false)
 
 const openAndCloseBurguer = (): void => { show.value = !show.value }
+onBeforeRouteUpdate((to, from, next) => {
+  console.log('oi')
+  next()
+})
+
 </script>
 
 
 <template>
   <div class="w-full top-0 sticky bg-white z-10 shadow-xl">
-    <div class="navbar">
+    <div id="navbar" class="navbar">
       <nav class="relative px-4 py-4 flex justify-between items-center bg-white">
-        <router-link class="text-3xl font-bold leading-none" to="/">
+        <router-link id="logoRouter" class="text-3xl font-bold leading-none" to="/">
           <img width="150" src="/assets/big-logo.png" alt="Logo">
         </router-link>
         <div class="order-last lg:hidden">
@@ -35,7 +41,8 @@ const openAndCloseBurguer = (): void => { show.value = !show.value }
             </svg>
           </li>
           <li>
-            <router-link class="text-sm text-gray-400 hover:text-gray-500" :to="{ path: '/' }">Eventos</router-link>
+            <router-link id="eventosRouter" class="text-sm text-gray-400 hover:text-gray-500" to="/">
+              Eventos</router-link>
           </li>
           <li class="text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
@@ -45,7 +52,8 @@ const openAndCloseBurguer = (): void => { show.value = !show.value }
             </svg>
           </li>
           <li v-if="userStore.isLoggedIn">
-            <router-link class="text-sm text-gray-400 hover:text-gray-500" :to="{ path: '/dashboard'}">Dashboard
+            <router-link id="dashboardRouter" class="text-sm text-gray-400 hover:text-gray-500" to="/dashboard">
+              Dashboard
             </router-link>
           </li>
           <li v-if="userStore.isLoggedIn" class="text-gray-300">
@@ -57,10 +65,10 @@ const openAndCloseBurguer = (): void => { show.value = !show.value }
           </li>
         </ul>
         <template v-if="!userStore.isLoggedIn">
-          <router-link
+          <router-link id="loginRouter"
             class="hidden sign lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
             to="/login">Entrar</router-link>
-          <router-link
+          <router-link id="registerRouter"
             class="hidden sign lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200"
             to="/cadastro">Cadastre-se</router-link>
         </template>

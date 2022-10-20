@@ -1,11 +1,23 @@
 <script setup lang="ts">
 import { CheckIcon } from '@heroicons/vue/20/solid'
-import { getCities, getStates } from '@/services/CityService'
-import { ref, reactive } from 'vue'
-import type { Option } from '@/types/CityTypes'
+import { getEvents } from '@/services/EventService'
+import { type Ref, ref } from 'vue'
+import { useEventStore } from '@/stores/eventStore'
 
+const eventStore = useEventStore()
 
+const state: Ref<string> = ref('')
+const city: Ref<string> = ref('')
+const eventName: Ref<string> = ref('')
 
+console.log(state.value)
+const procurarEventos = () => {
+  console.log('procurando evento')
+  getEvents(12, 1, { state: state.value, city: city.value, eventName: eventName.value }).then((res) => {
+    console.log(res)
+    eventStore.changeEvent(res)
+  })
+}
 </script>
 
 <template>
@@ -17,20 +29,20 @@ import type { Option } from '@/types/CityTypes'
           Procurar eventos
         </h2>
         <div class="mt-2 grow flex items-center text-sm text-gray-500">
-          <StateInput />
+          <StateInput @@state-changed="state = $event" />
         </div>
         <div class="mt-2 grow flex items-center text-sm text-gray-500">
-          <CityInput />
+          <CityInput @@city-changed="city = $event" />
         </div>
         <div class="mt-7 grow flex items-center text-sm text-gray-500">
-          <TextInput placeholder="Nome do evento" />
+          <TextInput placeholder="Nome do evento" @@event-name-changed="eventName = $event" />
         </div>
       </div>
     </div>
 
 
     <span class="sm:ml-3 mt-7">
-      <button type="button"
+      <button @click="procurarEventos" type="button"
         class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
         <CheckIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
         Procurar

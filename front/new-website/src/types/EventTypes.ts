@@ -1,3 +1,5 @@
+import type { Ref } from 'vue'
+
 export const API_EVENTS = 'api/v1/event'
 
 export interface EventsResponse {
@@ -35,4 +37,10 @@ export interface EventImage {
   filename: string
   path: string
   size: number
+}
+
+export interface Filters {
+  city?: string
+  state?: string
+  eventName?: string
 }

@@ -1,4 +1,8 @@
-import { API_EVENTS, type EventsResponse } from '@/types/EventTypes'
+import {
+  API_EVENTS,
+  type EventsResponse,
+  type Filters
+} from '@/types/EventTypes'
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 import { useEventStore } from '../stores/eventStore'
 import { useUserStore } from '../stores/userStore'
@@ -37,9 +41,15 @@ events.interceptors.response.use((res) => {
 
 const getEvents = (
   limit: number = 12,
-  page: number = 1
-): Promise<AxiosResponse<EventsResponse, any>> => {
-  return events.get(API_EVENTS + `?limit=${limit}&page=${page}`)
+  page: number = 1,
+  filters?: Filters
+): Promise<EventsResponse> => {
+  return !filters
+    ? events.get(API_EVENTS + `?limit=${limit}&page=${page}`)
+    : events.get(
+        API_EVENTS +
+          `?limit=${limit}&page=${page}&city=${filters.city}&state=${filters.state}&title=${filters.eventName}`
+      )
 }
 
 export { getEvents }

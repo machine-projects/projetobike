@@ -8,12 +8,15 @@ import { HeadlessUiResolver } from 'unplugin-vue-components/resolvers'
 import path from 'path'
 
 export default defineConfig({
+  test: {
+    globals: true
+  },
   plugins: [
     VueRouter({ importMode: 'sync' }),
     vue(),
     Components({ resolvers: [HeadlessUiResolver()] }),
     AutoImport({
-      imports: ['vue', VueRouterAutoImports]
+      imports: ['vue', VueRouterAutoImports, 'vitest']
     })
   ],
   server: {

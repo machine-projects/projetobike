@@ -1,4 +1,3 @@
-import { getCities } from '@/services/CityService'
 import type { Option } from '@/types/CityTypes'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 

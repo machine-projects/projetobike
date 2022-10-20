@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     MenuItem: typeof import('@headlessui/vue')['MenuItem']
     MenuItems: typeof import('@headlessui/vue')['MenuItems']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
+    Pagination: typeof import('./src/components/UiElements/Pagination.vue')['default']
     PaginationEvents: typeof import('./src/components/PaginationEvents.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -24,5 +25,6 @@ declare module '@vue/runtime-core' {
     StateInput: typeof import('./src/components/UiElements/StateInput.vue')['default']
     TextInput: typeof import('./src/components/UiElements/TextInput.vue')['default']
     UserDropdown: typeof import('./src/components/UiElements/UserDropdown.vue')['default']
+    VuePaginationTw: typeof import('./src/components/UiElements/vue-pagination-tw.vue')['default']
   }
 }
