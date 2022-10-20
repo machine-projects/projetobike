@@ -1,6 +1,7 @@
 import {IsBoolean, IsNumberString, IsOptional, IsString } from "class-validator";
 import {queryParamsMessage} from '../../config/messages/queryParams.message'
 import { PaginateDto } from "../../config/dto/paginate.dto";
+import { Transform } from "class-transformer";
 
 export class QueryParamsDto extends PaginateDto {
 
@@ -15,6 +16,7 @@ export class QueryParamsDto extends PaginateDto {
   @IsString({ message: queryParamsMessage.title })
   title : string;
   @IsOptional()
+  @Transform(({ value }) => JSON.parse(value))
   @IsBoolean({ message: queryParamsMessage.isFeatured })
   isFeatured : boolean;
 

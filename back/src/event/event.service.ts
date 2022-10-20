@@ -8,9 +8,11 @@ import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 import { CreateImageEventDto } from './dto/create-image-event.dto';
 import { DeleteEventImageDto } from './dto/delete-event-image.dto';
+import { QueryParamsDto } from './dto/params.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { EventEntity } from './entities/event.entity';
 import { FeaturedEventEntity } from './entities/featuredEvent.entity';
+import { querysParamHelper } from './helper/queryParams.helper';
 import { CreateEventType } from './types/createEvent.type';
 
 @Injectable()
@@ -74,10 +76,12 @@ export class EventService {
     
   }
 
-  async findAll(params : PaginateDto) {
-    const paginate = pgToDefaultKeys(params);
-    const find = await this.eventRepository.findAndCount({...paginate.ormPg});
-    return paginateResponse(find, paginate.viewPg);
+  async findAll(params : QueryParamsDto) {
+    const formatParams = querysParamHelper(params);
+    
+    
+    const find = await this.eventRepository.findAndCount({...formatParams.paginate.ormPg, where: formatParams.where});
+    return paginateResponse(find, formatParams.paginate.viewPg);
   }
 
   async findOne(contions: any) {

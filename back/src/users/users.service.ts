@@ -70,20 +70,15 @@ export class UsersService {
   }
 
   async update(id: string, data) {
-    const user = await this.findOneNotPass({ id });
-    this.usersRepository.merge(user, data);
-    const options = {
-      select: [
-        'id',
-        'cpf',
-        'firstName',
-        'lastName',
-        'email',
-        'createdDate',
-        'updatedDate',
-      ],
-    };
-    return await this.usersRepository.save(user);
+   try{
+     const user = await this.findOneNotPass({ id });
+     const updateUser = this.usersRepository.merge(user, data);
+    
+     return await this.usersRepository.save(updateUser);
+   }
+   catch (error){
+    throw new NotFoundException(error.message)
+   }
   }
 
   async delete(id: string) {
