@@ -8,11 +8,13 @@ import { AuthMessage } from "../message/auth.message";
 export class LocalStrategy extends PassportStrategy(Strategy){
     constructor(private authService: AuthService){
         super({
-            usernameField: 'cpf'
+            usernameField: 'cpf',
+            
         });
     }
 
     async validate(cpf: string, password: string){
+        cpf = cpf.split(".").join("").split("-").join("").trim();
         const user = await this.authService.validateUser(cpf, password);
         if (!user) 
             throw new UnauthorizedException(AuthMessage.PASSWORD_OR_CPF_INVALID)

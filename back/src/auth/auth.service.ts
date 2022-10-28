@@ -11,7 +11,7 @@ export class AuthService {
         private readonly jwtService: JwtService
         ) { }
     async login(user) {
-        const payload = { sub: user.id, email: user.email }
+        const payload = { sub: user.id, email: user.email, accountType: user.accountType }
         return {
             token: this.jwtService.sign(payload)
         }
@@ -28,8 +28,9 @@ export class AuthService {
 
         const isPasswordValid = compareSync(password, user.password)
         if (!isPasswordValid) return null
-
-        return user;
+        const { password: pass, ...result } = user;
+        return result;
+        // return user;
     }
 
 }
