@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { EventModule } from './event/event.module';
 import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from './users/roles.guard';
+import { RolesGuard } from './guard/roles.guard';
 
 @Module({
   imports: [
@@ -29,11 +29,11 @@ import { RolesGuard } from './users/roles.guard';
     EventModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
+  // providers: [
+  //   {
+  //     // provide: APP_GUARD,
+  //     // useClass: RolesGuard,
+  //   },
+  // ],
 })
 export class AppModule {}

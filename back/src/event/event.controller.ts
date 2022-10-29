@@ -10,14 +10,20 @@ import { PaginateDto } from 'src/config/dto/paginate.dto';
 import { CreateImageEventDto } from './dto/create-image-event.dto';
 import { DeleteEventImageDto } from './dto/delete-event-image.dto';
 import { QueryParamsDto } from 'src/event/dto/params.dto';
+import { Roles } from 'src/guard/roles.decorator';
+import { RoleCollaction } from 'src/guard/role.enum';
+import { RolesGuard } from 'src/guard/roles.guard';
+import { Public } from 'src/guard/public.guard';
+import { JwtAuthGuard } from 'src/guard/jwt-auth.guard';
 
 
 @Controller(ControllerVersionHelper.v1 + 'event')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class EventController {
   constructor(private readonly eventService: EventService) { }
 
   @Post()
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(...RoleCollaction.Organizador)
   @UseInterceptors(FileFieldsInterceptor([
     {name: 'photos', maxCount: 8},
     {name: 'imageHeader', maxCount: 1},
@@ -28,24 +34,25 @@ export class EventController {
   }
 
   @Get()
-  
+  @Public()
   findAll(@Query() getParam : QueryParamsDto) {
     return this.eventService.findAll(getParam);
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.eventService.findOne( {id});
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(...RoleCollaction.Organizador)
   update(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
     return this.eventService.updateData(id, updateEventDto);
   }
 
   @Post("images/:id")
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(...RoleCollaction.Organizador)
   @UseInterceptors(FileFieldsInterceptor([
     {name: 'photos', maxCount: 8},
     {name: 'imageHeader', maxCount: 1},
@@ -56,17 +63,18 @@ export class EventController {
   }
 
   @Delete('images/:id')
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(...RoleCollaction.Organizador)
   removeImage(@Param('id') id: string, @Body() deleteEventImage: DeleteEventImageDto) {
     return this.eventService.removeImage(id, deleteEventImage);
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(...RoleCollaction.Organizador)
   remove(@Param('id') id: string) {
     return this.eventService.remove(+id);
   }
 
+  @Public()
   @Get('/file/:filename')
   getFile(@Param('filename') filename: string): Promise<StreamableFile>  {
     return this.eventService.getFile(filename);
