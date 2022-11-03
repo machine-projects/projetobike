@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, MethodNotAllowedException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateDto } from 'src/config/dto/paginate.dto';
 import pgToDefaultKeys, { paginateResponse } from 'src/config/paginate.config';
@@ -14,8 +14,8 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: any) {
-    if (await this.usersRepository.findOne({where: { cpf: createUserDto.cpf} }))
-      throw new NotFoundException(userMessage.existCpf);
+    if (await this.usersRepository.findOne({where: [{ cpf: createUserDto.cpf}, {email: createUserDto.email}] }))
+      throw new MethodNotAllowedException(userMessage.existCpfOrEmail);
       createUserDto.cpf = createUserDto.cpf.split(".").join("").split("-").join("").trim()
     const user = await this.usersRepository.create(createUserDto);
     const createdUser: any = await this.usersRepository.save(user);

@@ -8,7 +8,7 @@ const userMessage = {
   password: 'A senha não pode ser nula',
   email: 'O email precisa ser valido!',
   existEmail: 'O email informado já está em uso!',
-  existCpf: 'O CPF informado já está em uso!',
+  existCpfOrEmail: 'O CPF ou email informado já está em uso!',
   sex: 'O sexo não pode ser nulo',
   birthDate: 'A data de nascimento não pode ser nula',
   state: 'O estado não pode ser nulo',

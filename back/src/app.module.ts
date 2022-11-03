@@ -4,6 +4,8 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { EventModule } from './event/event.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guard/roles.guard';
 
 @Module({
   imports: [
@@ -27,6 +29,11 @@ import { EventModule } from './event/event.module';
     EventModule,
   ],
   controllers: [],
-  providers: [],
+  // providers: [
+  //   {
+  //     // provide: APP_GUARD,
+  //     // useClass: RolesGuard,
+  //   },
+  // ],
 })
 export class AppModule {}
